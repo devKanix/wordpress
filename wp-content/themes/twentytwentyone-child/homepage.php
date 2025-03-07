@@ -325,14 +325,16 @@ if ($blog1_img) {
     <div class="dashed-line"></div>
     <div class="contact" id="contact">
     <h3>CONTACT ME</h3>
-    <form action="<?= get_stylesheet_directory_uri() ?>/process_form.php" method="POST" id="">
-    <input type="hidden" name="action" value="contact_form">
+    <form id="contact-form" method="POST">
+    <input type="hidden" name="action" value="submit_contact_form">
     <label for="email">Email:</label>
-    <input type="email" id="email" name="user_email" required>
+    <input type="email" id="email" name="user_email" required />
     <label for="message">Message:</label>
     <textarea id="message" name="message" required></textarea>
     <button type="submit">Submit</button>
 </form>
+<p id="response"></p>
+
 
 </div>
 

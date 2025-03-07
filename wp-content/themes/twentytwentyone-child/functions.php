@@ -10,6 +10,19 @@ function enqueue_child_theme_styles() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_child_theme_styles');
 
+
+function enqueue_custom_scripts() {
+    wp_enqueue_script(
+        'custom-script', 
+        get_stylesheet_directory_uri() . '/js/script.js', 
+        array('jquery'), 
+        null, 
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
+
+
 // Disable Block Editor (Gutenberg)
 add_filter('use_block_editor_for_post', '__return_false', 10);
 
@@ -36,3 +49,26 @@ if (function_exists('acf_add_options_page')) {
     ));
 }
 
+function handle_contact_form() {
+    global $wpdb;
+
+    // Sanitize inputs
+    $email = isset($_POST['user_email']) ? sanitize_email($_POST['user_email']) : '';
+    $message = isset($_POST['message']) ? sanitize_text_field($_POST['message']) : '';
+
+    if (!is_email($email) || empty($message)) {
+        echo "Invalid email or empty message!";
+        wp_die();
+    }
+
+    // Insert into the database (assuming a table `wp_contact_messages` exists)
+    $table_name = $wpdb->prefix . "contact_messages"; // Auto handle table prefix
+    $wpdb->insert($table_name, ['email' => $email, 'message' => $message]);
+
+    echo "✅ Message submitted successfully!";
+    wp_die(); // Required for AJAX responses
+}
+
+// Hook AJAX handlers for logged-in and non-logged-in users
+add_action('wp_ajax_submit_contact_form', 'handle_contact_form');
+add_action('wp_ajax_nopriv_submit_contact_form', 'handle_contact_form');
