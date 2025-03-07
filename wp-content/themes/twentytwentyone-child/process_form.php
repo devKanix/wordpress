@@ -1,4 +1,6 @@
 <?php
+
+print_r($_POST);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -36,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Execute query
     if ($stmt->execute()) {
-        header("Location: thank-you.php");
+        header("Location: thank-you");
         $stmt->close();
         exit();
     } else {

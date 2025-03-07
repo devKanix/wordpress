@@ -325,7 +325,7 @@ if ($blog1_img) {
     <div class="dashed-line"></div>
     <div class="contact" id="contact">
     <h3>CONTACT ME</h3>
-    <form action="<?= get_stylesheet_directory_uri() ?>/process_form.php" method="POST">
+    <form action="<?= get_stylesheet_directory_uri() ?>/process_form.php" method="POST" id="">
     <input type="hidden" name="action" value="contact_form">
     <label for="email">Email:</label>
     <input type="email" id="email" name="user_email" required>
